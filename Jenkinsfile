@@ -7,12 +7,13 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build from')
-        string(name: "STUDENT_NAME", defaultValue: "Manahil") //provide your name here, no name, no marks
+        string(name: 'STUDENT_NAME', defaultValue: 'Manahil') 
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run Jest tests after build')
     }
 
-    environment {
+
+   environment {
         APP_VERSION = "1.0.${BUILD_NUMBER}"
         MAINTAINER = "Student"
     }
@@ -34,7 +35,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo " Building version ${APP_VERSION} for ${params.ENVIRONMENT} environment"
+                echo "Building version ${APP_VERSION} for ${params.ENVIRONMENT} environment"
                 bat '''
                     echo Simulating build process...
                     if not exist build mkdir build
@@ -75,10 +76,10 @@ pipeline {
             deleteDir()
         }
         success {
-            echo " Pipeline succeeded! Version ${APP_VERSION} built and tested."
+            echo "Pipeline succeeded! Version ${APP_VERSION} built and tested."
         }
         failure {
-            echo " Pipeline failed! Check console output for details."
+            echo "Pipeline failed! Check console output for details."
         }
     }
 }
